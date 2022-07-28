@@ -23,5 +23,4 @@ async function createAuction(event, context) {
     body: JSON.stringify({ auction }),
   };
 }
-
 export const handler = createAuction;

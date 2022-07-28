@@ -12,30 +12,12 @@ provider:
   memorySize: 256
   stage: ${opt:stage, 'dev'}
   region: eu-west-1
-  iam:
-    role:
-      statements:
-        - Effect: Allow
-          Action: 
-            - dynamodb:PutItem
-          Resource: 
-            - arn:aws:dynamodb:eu-west-1:218270470437:table/AuctionTable
-            - arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/AuctionTable
-
+  iam: ${file(iam/AuctionTableIAM.yml):AuctionTableIAM}
 resources:
-  Resources:
-    AuctionTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: AuctionTable
-        BillingMode: PAY_PER_REQUEST
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
-        KeySchema:
-          - AttributeName: id
-            KeyType: HASH
-  
+  Resources: 
+  # ${file(resources/AuctionsTable.yml):AuctionTable}
+    AuctionTable: ${file(resources/AuctionsTable.yml):AuctionTable}
+    
 functions:
   createAuction:
     handler: src/handlers/createAuction.handler
