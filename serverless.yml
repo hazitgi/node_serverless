@@ -18,27 +18,10 @@ provider:
     role:
       statements:
         - ${file(iam/AuctionTableIAM.yml):AuctionTableIAM}
-        # - Effect: Allow
-        #   Action:
-        #     - dynamodb:PutItem
-        #   Resource:
-        #     - arn:aws:dynamodb:eu-west-1:218270470437:table/AuctionTable
-        #     - arn:aws:dynamodb:#{AWS::Region}:#{AWS::AccountId}:table/AuctionTable
 
 resources:
   Resources:
     AuctionTable: ${file(resources/AuctionsTable.yml):AuctionTable}
-    # AuctionTable:
-    #   Type: AWS::DynamoDB::Table
-    #   Properties:
-    #     TableName: AuctionTable
-    #     BillingMode: PAY_PER_REQUEST
-    #     AttributeDefinitions:
-    #       - AttributeName: id
-    #         AttributeType: S
-    #     KeySchema:
-    #       - AttributeName: id
-    #         KeyType: HASH
 
 functions:
   createAuction:
