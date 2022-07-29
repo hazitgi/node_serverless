@@ -1,7 +1,7 @@
-AuctionTable:
+AuctionTable3:
   Type: AWS::DynamoDB::Table
   Properties:
-    TableName: AuctionTable
+    TableName: AuctionTable3
     BillingMode: PAY_PER_REQUEST
     AttributeDefinitions:
       - AttributeName: id
