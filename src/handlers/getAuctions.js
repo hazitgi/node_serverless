@@ -1,6 +1,8 @@
 import AWS from "aws-sdk";
 import commonMiddleware from "../lib/commonMiddleware";
 import createError from "http-errors";
+import validator from "@middy/validator";
+import getAuctionSchema from "../lib/schemas/getAuctionSchema";
 
 const DynamoDB = new AWS.DynamoDB.DocumentClient();
 
@@ -31,4 +33,24 @@ async function getAuctions(event, context) {
     throw new createError.InternalServerError(error);
   }
 }
-export const handler = commonMiddleware(getAuctions);
+export const handler = commonMiddleware(getAuctions).use(
+  validator({
+    inputSchema: {
+      type: "object",
+      properties: {
+        queryStringParameters: {
+          type: "object",
+          properties: {
+            status: {
+              type: "string",
+              enum: ["OPEN", "CLOSED"],
+              default: "OPEN",
+            },
+          },
+        },
+      },
+      required: ["queryStringParameters"],
+    },
+    useDefaults: true,
+  })
+);
