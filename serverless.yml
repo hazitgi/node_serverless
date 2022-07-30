@@ -1,5 +1,3 @@
-org: differenthalibut
-console: true
 service: auction-service
 
 plugins:
