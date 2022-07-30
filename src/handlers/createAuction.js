@@ -11,11 +11,15 @@ async function createAuction(event, context) {
   if (!title) {
     throw new createError.InternalServerError("title required");
   }
+
+  const endDate = new Date();
+  endDate.setHours(now.getHours() + 1);
   const auction = {
     id: uuid(),
     title,
     status: "OPEN",
     createdAt: now.toISOString(),
+    endingAt: endDate.toISOString(),
     highestBid: {
       amount: 0,
     },
