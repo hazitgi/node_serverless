@@ -5,8 +5,13 @@ AuctionTableIAM:
     - dynamodb:Scan
     - dynamodb:GetItem
     - dynamodb:UpdateItem
+    - dynamodb:Query
   Resource:
     - ${self:custom.AuctionTable.arn}
+    - !Join ['/', ['${self:custom.AuctionTable.arn}', 'index', 'statusAndEndDate']]
+
+    
+    # - ${self:custom.AuctionTable.arn}/index/statusAndEndDate
 
 
 
